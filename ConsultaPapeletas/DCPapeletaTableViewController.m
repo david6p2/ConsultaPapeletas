@@ -62,8 +62,8 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    NSArray *papeletaAtSection = [self.papeletas objectAtIndex:section];
-    return [NSString stringWithFormat:@"ID_INFRACCION : %@",[papeletaAtSection objectAtIndex:1]];
+    NSDictionary *papeletaAtSection = [self.papeletas objectAtIndex:section];
+    return [NSString stringWithFormat:@"Papeleta # %@", papeletaAtSection[@"idPapeleta"]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -71,67 +71,67 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSArray *papeletaAtSection = [self.papeletas objectAtIndex:indexPath.section];
+    NSDictionary *papeletaAtSection = [self.papeletas objectAtIndex:indexPath.section];
     // Configure the cell...
     NSString * textStr = [[NSString alloc] init];
     switch (indexPath.row) {
         case 0:
-            textStr = @"PLACA : ";
+            textStr = @"placa";
             break;
         case 1:
-            textStr = @"ID_INFRACCION : ";
+            textStr = @"idInfracion";
             break;
         case 2:
-            textStr = @"FECHA_INFRACCION : ";
+            textStr = @"fechainfracion";
             break;
         case 3:
-            textStr = @"NOMBRE_CLASE_INFRACCION : ";
+            textStr = @"nomclasifinfra";
             break;
         case 4:
-            textStr = @"NOMBRE_TIPO_INFRACCION : ";
+            textStr = @"nomtipinfra";
             break;
         case 5:
-            textStr = @"NUMERO_RS : ";
+            textStr = @"numerors";
             break;
         case 6:
-            textStr = @"FLAG_SIN_PLACA : ";
+            textStr = @"sinplaca";
             break;
         case 7:
-            textStr = @"MARCA_VEHICULO : ";
+            textStr = @"macavehi";
             break;
         case 8:
-            textStr = @"ANHO_FABRICACION : ";
+            textStr = @"aniofabri";
             break;
         case 9:
-            textStr = @"NUM_DOC_INFRACTOR : ";
+            textStr = @"numdocinfra";
             break;
         case 10:
-            textStr = @"APELLIDOS_INFRACTOR : ";
+            textStr = @"apesinfra";
             break;
         case 11:
-            textStr = @"NOMBRES_INFRACTOR : ";
+            textStr = @"nominfra";
             break;
         case 12:
-            textStr = @"ID_DNI_CONCESIONARIA : ";
+            textStr = @"docprop";
             break;
         case 13:
-            textStr = @"APELL_RAZON_SOCIAL_PROPIETARIO : ";
+            textStr = @"nompro";
             break;
         case 14:
-            textStr = @"RUTA : ";
+            textStr = @"rutaveh";
             break;
         case 15:
-            textStr = @"NOMBRE_VIA_INFRACCION : ";
+            textStr = @"nombreviainfra";
             break;
         case 16:
-            textStr = @"NOMBRE_DISTRITO : ";
+            textStr = @"distritoinfra";
             break;
             
         default:
             textStr = @"NO DATA : ";
             break;
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@%@", textStr, [papeletaAtSection objectAtIndex:indexPath.row]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ : %@", textStr, papeletaAtSection[textStr]];
 
     
     return cell;

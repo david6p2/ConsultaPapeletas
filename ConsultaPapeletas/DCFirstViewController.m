@@ -85,43 +85,23 @@
 #pragma mark - APIconnectionsDelegate
 
 -(void)checkInfractionsSamuelByLicensePlateDidFinishSuccessfully:(NSArray*)checkInfractionsByLicensePlateResponse{
-    if (checkInfractionsByLicensePlateResponse[@"result"]) {
-        NSArray * result = checkInfractionsByLicensePlateResponse[@"result"];
-        if (!self.papeletas) {
-            self.papeletas = [[NSMutableArray alloc] init];
-        }else{
-            if (self.papeletas.count) {
-                [self.papeletas removeAllObjects];
-            }
-        }
-        
-        
-        for (NSArray * papeleta in result) {
-            NSString * placa = [papeleta objectAtIndex:0];
-            if ([placa isEqualToString:self.platesTxtField.text]) {
-                [self.papeletas addObject:papeleta];
-            }
-        }
-        if ([SVProgressHUD isVisible]) {
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Consulta finalizada!", nil)];
-        }
+    if ([SVProgressHUD isVisible]) {
+        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Consulta finalizada!", nil)];
+    }
+    if (checkInfractionsByLicensePlateResponse.count) {
+        self.papeletas = [[NSMutableArray alloc] initWithArray:checkInfractionsByLicensePlateResponse];
         self.requestButton.titleLabel.text = @"Borrar";
-        if (self.papeletas.count) {
-            NSLog(@"Las papeletas son: %@", self.papeletas);
-            NSString * papeletasString = [[NSString alloc] init];
-            if (self.papeletas.count > 1) {
-                papeletasString = @"papeletas";
-            }else{
-                papeletasString = @"papeleta";
-            }
-            self.infoTextView.text = [NSString stringWithFormat:@"La placa %@ tiene %lu %@",  self.platesTxtField.text, (unsigned long)self.papeletas.count, papeletasString];
-            self.verPapeletasButton.hidden = NO;
+        NSLog(@"Las papeletas son: %@", self.papeletas);
+        NSString * papeletasString = [[NSString alloc] init];
+        if (self.papeletas.count > 1) {
+            papeletasString = @"papeletas";
         }else{
-            self.infoTextView.text = [NSString stringWithFormat:@"La placa %@ no tiene papeletas",  self.platesTxtField.text];
+            papeletasString = @"papeleta";
         }
-        
+        self.infoTextView.text = [NSString stringWithFormat:@"La placa %@ tiene %lu %@",  self.platesTxtField.text, (unsigned long)self.papeletas.count, papeletasString];
+        self.verPapeletasButton.hidden = NO;
     }else{
-        NSLog(@"No Results for checkInfractionsByLicensePlateDidFinishSuccessfully");
+        self.infoTextView.text = [NSString stringWithFormat:@"La placa %@ no tiene papeletas",  self.platesTxtField.text];
     }
     
 }
